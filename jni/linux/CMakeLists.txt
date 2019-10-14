@@ -10,4 +10,10 @@ link_directories(${OpenCL_LIB_DIRS})
 add_executable(clinstbench
   cli-app.cpp ../bench/bench.c ../port.c)
 
-target_link_libraries(clinstbench OpenCL)
+if (APPLE)
+    target_link_libraries(clinstbench "-framework opencl")
+else()
+    target_link_libraries(clinstbench OpenCL)
+endif()
+
+set(CMAKE_CXX_FLAGS "-std=c++11")

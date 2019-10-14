@@ -39,7 +39,11 @@ aligned_free(void *p)
 
 #else
 #include <unistd.h>
+#ifdef __APPLE__
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 
 void
 timeval_get(timeval_t *t)
@@ -68,7 +72,16 @@ timeval_diff_msec(timeval_t *t0, timeval_t *t1)
 void *
 aligned_malloc(size_t size, size_t align)
 {
+#ifdef __APPLE__
+    void * p;
+    if (posix_memalign(&p, align, size)) {
+        return NULL;
+    } else {
+        return p;
+    }
+#else
     return memalign(align, size);
+#endif
 }
 
 void
