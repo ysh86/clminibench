@@ -24,6 +24,7 @@ int main(int argc, char **argv)
             struct clinst_bench_context bench_ctxt;
 
             auto n = d.getInfo<CL_DEVICE_NAME>();
+            std::cout << "--------------------------------------" << std::endl;
             std::cout << "dev = " << n << '\n';
 
             clinst_bench_init_context(&bench_ctxt, d());
